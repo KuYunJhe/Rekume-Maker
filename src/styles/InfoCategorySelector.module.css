@@ -1,0 +1,44 @@
+.container {
+
+  display: flex;
+  padding: 0 2rem;
+  /* background-color: rgb(43, 198, 226); */
+}
+
+
+
+.operate_bar_btm {
+  padding: 0.7rem;
+  border: inherit;
+  width: 8rem;
+}
+
+
+.btm_icon {
+  justify-self: center;
+  display: block;
+  background-color: transparent;
+  color: #ffffff5e;
+  font-size: 1.5rem;
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 500,
+    'GRAD' 0,
+    'opsz' 24;
+  /*---------------*/
+  /* 讓 icon 成為區塊元素，方便 transform */
+  /* display: inline-block; */
+  /* 將 icon 放大 1.5 倍 */
+  transform: scale(1.3);
+  /* 為了讓圖標和文字對齊，你可能需要微調 */
+  /* vertical-align: middle; */
+}
+
+
+.btm_title {
+  justify-self: center;
+  margin-top: 0.6rem;
+  font-size: 0.8rem;
+  display: block;
+  color: #ffffff5e;
+}

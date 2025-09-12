@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "classnames": "^2.5.1",
+    "normalize.css": "^8.0.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
