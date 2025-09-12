@@ -3,13 +3,14 @@ class ResumeItem {
     id,
     title,
     itemType = "",
+    minorTitle = "",
     startTime = "",
     endTime = "",
-    completed = false,
   }) {
     this.id = id;
     this.title = title;
     this.itemType = itemType;
+    this.minorTitle = minorTitle;
     this.startTime = startTime;
     this.endTime = endTime;
     this.descriptItems = []; // 儲存多個描述片段
@@ -58,22 +59,24 @@ const myResume = new ResumeItemCollection();
 // 2️⃣ 新增一個履歷項目
 const workItem = myResume.add({
   id: 1,
-  title: "前端工程師",
-  itemType: "工作經驗",
-  startTime: "2022-01",
-  endTime: "2023-06",
+  title: "Ku Yun-Jhe",
+  minorTitle: "Natioanl Dong Hwa University, M.S. Computer Science",
+  itemType: "profile",
+  startTime: "1999-01",
+  endTime: "????-??",
 });
 
 // 3️⃣ 新增描述片段
 workItem.addDescriptItem({
-  descriptContain: "負責開發公司官網",
-  minorInfo: "使用 React + TypeScript",
-  link: "https://example.com",
+  descriptContain: "",
+  minorInfo: "",
+  link: "(+886)970220868",
 });
 
 workItem.addDescriptItem({
-  descriptContain: "優化前端效能",
-  minorInfo: "頁面載入速度提升 50%",
+  descriptContain: "",
+  minorInfo: "",
+  link: "san6886@gmail.com",
 });
 
 // 4️⃣ 查找特定項目

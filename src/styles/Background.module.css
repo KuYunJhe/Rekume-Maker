@@ -1,9 +1,13 @@
 .Background {
 
   /*-------自身排版-------*/
-  height: 100%;
   min-height: 100vh;
-
+  height: 100%;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
 
   /*-------樣式-------*/
   background-color: brown;
@@ -13,12 +17,13 @@
 
 
   /* background-image: */
-    /* 最上層: 放射狀漸層 */
-    /* radial-gradient(ellipse at 30% 0%, rgba(255, 255, 0, 0.4), rgba(255, 255, 0, 0)), */
-    /* 最底層: 線性漸層 */
-    /* linear-gradient(0deg, #cecece 0%, #ffffff 70%); */
+  /* 最上層: 放射狀漸層 */
+  /* radial-gradient(ellipse at 30% 0%, rgba(255, 255, 0, 0.4), rgba(255, 255, 0, 0)), */
+  /* 最底層: 線性漸層 */
+  /* linear-gradient(0deg, #cecece 0%, #ffffff 70%); */
 
 
   /* 固定背景，但在ios系統支援度不好*/
   background-attachment: fixed;
+
 }

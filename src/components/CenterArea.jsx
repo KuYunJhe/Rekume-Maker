@@ -1,17 +1,13 @@
 import { useState } from "react";
 import classNames from "classnames";
 
-import styles from "../styles/LeftArea.module.css";
+import styles from "../styles/CenterArea.module.css";
 import styles_Glass from "../styles/Glass.module.css";
 
-export default function LeftArea() {
+export default function CenterArea() {
   return (
     <>
-      <div className={styles.container}>
-        
-
-
-      </div>
+      <div className={styles.container}>CenterArea</div>
     </>
   );
 }

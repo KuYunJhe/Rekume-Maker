@@ -1,4 +1,4 @@
-.container{
-
-  height: 60rem;
+.container {
+  height: fit-content;
+  overflow: auto;/* 防止邊距合併 */
 }

@@ -1,13 +1,6 @@
 .container {
-
-
-  background-color: aliceblue;
-
-
-  height: 45rem;
+  background-color: rgb(255, 255, 255);
+  width: 40rem;
   aspect-ratio: 210 / 297;
-  position: absolute;
-  top: 5rem;
-  left: 50%;
-  transform: translate(-50%,0%);
+  margin: 5rem auto 8rem;
 }

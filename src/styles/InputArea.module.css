@@ -1,5 +1,19 @@
 .container {
 
-  /* background-color: rgb(153, 0, 255); */
+  /* background-color: rgba(0, 255, 21, 0.5); */
 
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  padding: 5rem 5rem 8rem 5rem;
+
+  display: grid;
+  grid-template-columns: 1fr 40rem 1fr;
+
+  justify-items: center;
+  align-items: center;
 }

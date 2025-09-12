@@ -21,14 +21,14 @@ export default function InfoCategorySelector() {
         })}
       >
         {items.map((item) => (
-          <buttom key={item.id} className={classNames(styles.operate_bar_btm)}>
+          <button key={item.id} className={classNames(styles.operate_bar_btm)}>
             <span
-              class={classNames("material-symbols-outlined", styles.btm_icon)}
+              className={classNames("material-symbols-outlined", styles.btm_icon)}
             >
               {item.iconName}
             </span>
-            <span class={classNames(styles.btm_title)}>{item.title}</span>
-          </buttom>
+            <span className={classNames(styles.btm_title)}>{item.title}</span>
+          </button>
         ))}
       </div>
     </>

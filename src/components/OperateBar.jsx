@@ -23,7 +23,7 @@ export default function OperateBar() {
             [styles.operate_bar_btm]: true,
           })}
         >
-          <span class="material-symbols-outlined">download</span>
+          <span className="material-symbols-outlined">download</span>
         </button>
       </div>
     </>
