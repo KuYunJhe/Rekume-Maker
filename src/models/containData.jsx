@@ -1,16 +1,18 @@
 class ResumeItem {
   constructor({
     id,
-    title,
+    itemTitle,
     itemType = "",
-    minorTitle = "",
+    mainContain = "",
+    minorContain = "",
     startTime = "",
     endTime = "",
   }) {
     this.id = id;
-    this.title = title;
+    this.itemTitle = itemTitle;
     this.itemType = itemType;
-    this.minorTitle = minorTitle;
+    this.mainContain = mainContain;
+    this.minorContain = minorContain;
     this.startTime = startTime;
     this.endTime = endTime;
     this.descriptItems = []; // 儲存多個描述片段
@@ -46,6 +48,13 @@ export default class ResumeItemCollection {
     return this.items.find(predicate);
   }
 
+  // 根據類型取得所有相關項目
+  getByType(type) {
+    return this.items.filter(
+      (item) => item.itemType.toLowerCase() === type.toLowerCase()
+    );
+  }
+
   // 查看全部項目
   all() {
     // 回傳淺拷貝，避免外部直接修改 items
@@ -59,9 +68,10 @@ const myResume = new ResumeItemCollection();
 // 2️⃣ 新增一個履歷項目
 const workItem = myResume.add({
   id: 1,
-  title: "Ku Yun-Jhe",
-  minorTitle: "Natioanl Dong Hwa University, M.S. Computer Science",
-  itemType: "profile",
+  itemType: "Profile",
+  itemTitle: "Name & Contact",
+  mainContain: "Ku Yun-Jhe",
+  minorContain: "Natioanl Dong Hwa University, M.S. Computer Science",
   startTime: "1999-01",
   endTime: "????-??",
 });
@@ -89,3 +99,6 @@ workItem.addDescriptItem({
 
 // 6️⃣ 查看全部項目
 console.log("目前所有項目：", myResume.all());
+
+
+export { myResume, ResumeItemCollection };
