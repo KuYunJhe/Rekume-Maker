@@ -15,10 +15,12 @@ export default function InputArea() {
   // const [resumeCollection] = useState(new ResumeItemCollection());
   const [resumeCollection] = useState(myResume);
 
-  const [currentType, setCurrentType] = useState("Profile");
+  const [currentType, setCurrentType] = useState("Profile"); // 當前輸入欄位模式 (Profile, Work, etc.)
 
   // 取得當前類型的既有資料
   const existingData = resumeCollection.getByType(currentType);
+
+  // console.log("InputArea existingData:", existingData);
 
   const handleTypeChange = (type) => {
     setCurrentType(type);
@@ -37,7 +39,7 @@ export default function InputArea() {
           <LeftArea
             currentType={currentType}// 當前輸入欄位模式 (Profile, Work, etc.)
             onChange={handleLeftChange}// 當輸入欄位變更時的回調
-            initialData={existingData}// 傳入當前類型的既有資料
+            DataOfCurrentType={existingData}// 傳入當前類型的既有資料
           />
           {/* <CenterArea currentType={currentType} />
           <RightArea currentType={currentType} /> */}

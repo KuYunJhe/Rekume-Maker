@@ -1,6 +1,5 @@
 class ResumeItem {
   constructor({
-    id,
     itemTitle,
     itemType = "",
     mainContain = "",
@@ -8,9 +7,9 @@ class ResumeItem {
     startTime = "",
     endTime = "",
   }) {
-    this.id = id;
-    this.itemTitle = itemTitle;
+    this.id = crypto.randomUUID();
     this.itemType = itemType;
+    this.itemTitle = itemTitle;
     this.mainContain = mainContain;
     this.minorContain = minorContain;
     this.startTime = startTime;
@@ -66,8 +65,7 @@ export default class ResumeItemCollection {
 const myResume = new ResumeItemCollection();
 
 // 2️⃣ 新增一個履歷項目
-const workItem = myResume.add({
-  id: 1,
+const ProfileItem = myResume.add({
   itemType: "Profile",
   itemTitle: "Name & Contact",
   mainContain: "Ku Yun-Jhe",
@@ -77,13 +75,13 @@ const workItem = myResume.add({
 });
 
 // 3️⃣ 新增描述片段
-workItem.addDescriptItem({
+ProfileItem.addDescriptItem({
   descriptContain: "",
   minorInfo: "",
   link: "(+886)970220868",
 });
 
-workItem.addDescriptItem({
+ProfileItem.addDescriptItem({
   descriptContain: "",
   minorInfo: "",
   link: "san6886@gmail.com",
@@ -97,8 +95,45 @@ workItem.addDescriptItem({
 // const removedCount = myResume.remove((item) => item.id === 1);
 // console.log(`刪除了 ${removedCount} 個項目`);
 
+const WorkItem_1 = myResume.add({
+  itemType: "Work",
+  itemTitle: "Software Engineer",
+  mainContain: "ABC Company",
+  minorContain: "Developing web applications",
+  startTime: "2024-01",
+  endTime: "2024-06",
+});
+
+WorkItem_1.addDescriptItem({
+  descriptContain:
+    "Developed a full-stack web application using React and Node.js.",
+  minorInfo: "這是 minorInfo",
+  link: "這是 link",
+});
+WorkItem_1.addDescriptItem({
+  descriptContain:
+    "Collaborated with cross-functional teams to define project requirements.",
+  minorInfo: "",
+  link: "",
+});
+
+const WorkItem_2 = myResume.add({
+  itemType: "Work",
+  itemTitle: "Frontend Developer",
+  mainContain: "XYZ Company",
+  minorContain: "Building user interfaces",
+  startTime: "2024-07",
+  endTime: "2024-12",
+});
+
+WorkItem_2.addDescriptItem({
+  descriptContain:
+    "Implemented responsive web designs using HTML, CSS, and JavaScript.",
+  minorInfo: "Technologies: HTML, CSS, JavaScript, React",
+  link: "",
+});
+
 // 6️⃣ 查看全部項目
 console.log("目前所有項目：", myResume.all());
-
 
 export { myResume, ResumeItemCollection };

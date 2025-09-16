@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function InputField({ field, value, onChange }) {
+export function InputField({ field, value, onChange }) {
   const { name, label, type, required } = field;
 
   // 處理 textarea 類型
@@ -47,6 +47,44 @@ export default function InputField({ field, value, onChange }) {
         required={!!required}
         onChange={(e) => onChange(name, e.target.value)}
       />
+    </div>
+  );
+}
+
+export function InputDescriptField({ field, value, onChange }) {
+  const { name, label, type, required, minorInfo, link } = field;
+
+  return (
+    <div>
+      {value.map((descriptItem, descIndex) => (
+        <div key={`${descriptItem}-desc-${descIndex}`}>
+          <label>{field.label}</label>
+          <textarea
+            value={descriptItem.descriptContain || ""}
+            onChange={(e) => onChange(name, e.target.value)}
+          />
+          {minorInfo && (
+            <>
+              <label>補充資訊</label>
+              <input
+                type="text"
+                value={descriptItem.minorInfo || ""}
+                onChange={(e) => onChange(name, e.target.value)}
+              />
+            </>
+          )}
+          {link && (
+            <>
+              <label>連結</label>
+              <input
+                type="text"
+                value={descriptItem.link || ""}
+                onChange={(e) => onChange(name, e.target.value)}
+              />
+            </>
+          )}
+        </div>
+      ))}
     </div>
   );
 }
