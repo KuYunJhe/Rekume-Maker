@@ -4,7 +4,7 @@ import styles_Glass from "../styles/Glass.module.css";
 import classNames from "classnames";
 import InfoCategorySelector from "../components/InfoCategorySelector.jsx";
 
-export default function OperateBar() {
+export default function OperateBar({setCurrentType}) {
   return (
     <>
       <div className={styles.container}>
@@ -16,7 +16,7 @@ export default function OperateBar() {
           <span className="material-symbols-outlined">delete</span>
         </button>
 
-        <InfoCategorySelector />
+        <InfoCategorySelector setCurrentType={setCurrentType} />
 
         <button
           className={classNames(styles_Glass.glassMaterial, {

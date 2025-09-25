@@ -1,9 +1,14 @@
 import { useState } from "react";
 
+import OperationUI from "../components/OperationUI.jsx";
+import DeskBoard from "../components/DeskBoard.jsx";
+
 export default function General() {
+
   return (
     <>
-      <h1>general</h1>
+      <DeskBoard />
+      <OperationUI/>
     </>
   );
 }

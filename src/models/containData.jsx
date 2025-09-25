@@ -1,29 +1,33 @@
 class ResumeItem {
   constructor({
+    id, // 新增 id 參數
     itemTitle,
-    itemType = "",
-    mainContain = "",
-    minorContain = "",
+    itemType,
+    itemSubTitle = "",
     startTime = "",
     endTime = "",
+    link = "",
+    linkLabel = "",
+    descriptItems = [],
   }) {
-    this.id = crypto.randomUUID();
-    this.itemType = itemType;
-    this.itemTitle = itemTitle;
-    this.mainContain = mainContain;
-    this.minorContain = minorContain;
-    this.startTime = startTime;
-    this.endTime = endTime;
-    this.descriptItems = []; // 儲存多個描述片段
+    this.id = id || crypto.randomUUID(); // 如果有 id 就用傳入的，沒有才生成新的
+    this.itemType = itemType; // 項目類型
+    this.itemTitle = itemTitle; // 主標題
+    this.itemSubTitle = itemSubTitle; // 子標題
+    this.startTime = startTime; // 開始時間
+    this.endTime = endTime; // 結束時間
+    this.link = link; // 連結
+    this.linkLabel = linkLabel; // 連結標籤
+    this.descriptItems = descriptItems; // 儲存多個描述片段
   }
 
   // 新增描述片段
-  addDescriptItem({ descriptContain, minorInfo = "", link = "" }) {
-    this.descriptItems.push({ descriptContain, minorInfo, link });
+  addDescriptItem({ descriptContent, descriptTitle = "" }) {
+    this.descriptItems.push({ descriptContent, descriptTitle });
   }
 }
 
-export default class ResumeItemCollection {
+export class ResumeItemCollection {
   constructor() {
     this.items = [];
   }
@@ -37,9 +41,17 @@ export default class ResumeItemCollection {
 
   // 移除項目
   remove(predicate) {
-    const originalLength = this.items.length;
-    this.items = this.items.filter((item) => !predicate(item));
-    return originalLength - this.items.length; // 回傳刪除數量
+    const before = this.items.length;
+    this.items = this.items.filter((i) => !predicate(i));
+    return before - this.items.length;
+  }
+
+  // 更新項目
+  update(updatedData) {
+    const index = this.items.findIndex((item) => item.id === updatedData.id);
+    if (index !== -1) {
+      Object.assign(this.items[index], updatedData);
+    }
   }
 
   // 查找特定項目
@@ -54,86 +66,42 @@ export default class ResumeItemCollection {
     );
   }
 
+  getById(id) {
+    return this.items.find((item) => item.id === id);
+  }
+
   // 查看全部項目
   all() {
     // 回傳淺拷貝，避免外部直接修改 items
     return [...this.items];
   }
+
+
+  // 純資料快照
+  toArray() {
+    // 純資料快照（可存 localStorage）
+    return this.items.map((i) => ({ ...i }));
+  }
+
+  // 從純資料陣列還原的物件，變成 ResumeItemCollection 實例
+  static newObjFromArray(arr = []) {
+    const col = new ResumeItemCollection();
+
+    // 使用 add 方法確保每個項目都是  ResumeItemCollection 實例裡面的 ResumeItem 實例
+    arr.forEach((obj) => col.add(obj));
+    return col;
+  }
 }
 
-// 1️⃣ 建立履歷集合
-const myResume = new ResumeItemCollection();
-
-// 2️⃣ 新增一個履歷項目
-const ProfileItem = myResume.add({
-  itemType: "Profile",
-  itemTitle: "Name & Contact",
-  mainContain: "Ku Yun-Jhe",
-  minorContain: "Natioanl Dong Hwa University, M.S. Computer Science",
-  startTime: "1999-01",
-  endTime: "????-??",
-});
-
-// 3️⃣ 新增描述片段
-ProfileItem.addDescriptItem({
-  descriptContain: "",
-  minorInfo: "",
-  link: "(+886)970220868",
-});
-
-ProfileItem.addDescriptItem({
-  descriptContain: "",
-  minorInfo: "",
-  link: "san6886@gmail.com",
-});
-
-// 4️⃣ 查找特定項目
-// const found = myResume.find((item) => item.id === 1);
-// console.log("找到的項目：", found);
-
-// 5️⃣ 刪除項目
-// const removedCount = myResume.remove((item) => item.id === 1);
-// console.log(`刪除了 ${removedCount} 個項目`);
-
-const WorkItem_1 = myResume.add({
-  itemType: "Work",
-  itemTitle: "Software Engineer",
-  mainContain: "ABC Company",
-  minorContain: "Developing web applications",
-  startTime: "2024-01",
-  endTime: "2024-06",
-});
-
-WorkItem_1.addDescriptItem({
-  descriptContain:
-    "Developed a full-stack web application using React and Node.js.",
-  minorInfo: "這是 minorInfo",
-  link: "這是 link",
-});
-WorkItem_1.addDescriptItem({
-  descriptContain:
-    "Collaborated with cross-functional teams to define project requirements.",
-  minorInfo: "",
-  link: "",
-});
-
-const WorkItem_2 = myResume.add({
-  itemType: "Work",
-  itemTitle: "Frontend Developer",
-  mainContain: "XYZ Company",
-  minorContain: "Building user interfaces",
-  startTime: "2024-07",
-  endTime: "2024-12",
-});
-
-WorkItem_2.addDescriptItem({
-  descriptContain:
-    "Implemented responsive web designs using HTML, CSS, and JavaScript.",
-  minorInfo: "Technologies: HTML, CSS, JavaScript, React",
-  link: "",
-});
-
-// 6️⃣ 查看全部項目
-console.log("目前所有項目：", myResume.all());
-
-export { myResume, ResumeItemCollection };
+// 工廠：第一次沒有資料時的預設內容
+export function createInitialItems() {
+  return [
+    {
+      itemType: "Profile",
+      itemTitle: "",
+      itemSubTitle: "",
+      id: crypto.randomUUID(),
+      descriptItems: [],
+    },
+  ];
+}

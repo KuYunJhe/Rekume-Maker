@@ -1,0 +1,35 @@
+.container {
+
+  color: aqua;
+  font-size: 2rem;
+  background-color: rgb(255, 255, 255);
+
+  margin-top: 2rem;
+}
+
+.itemTitle {
+
+  color: rgb(0, 255, 0);
+  font-size: 1.5rem;
+
+}
+
+
+.categoryTitle{
+
+  color: rgb(255, 0, 255);
+  font-size: 1.5rem;
+}
+
+
+.descriptContent{
+
+  color: rgb(0, 0, 0);
+  font-size: 1rem;
+}
+
+.descriptTitle{
+  color: rgb(23, 114, 189);
+  font-size: 1rem;
+
+}

@@ -2,7 +2,8 @@
 
   display: flex;
   padding: 0 2rem;
-  /* background-color: rgb(43, 198, 226); */
+  /* background-color: rgba(204, 62, 62, 0.678); */
+  /* filter: invert(0); */
 }
 
 
@@ -12,6 +13,19 @@
   border: inherit;
   width: 8rem;
   background-color: transparent;
+
+  /* filter: invert(1); */
+
+  color: rgba(255, 255, 255, 0.3);
+
+
+  color: rgba(0, 0, 0);
+}
+
+.operate_bar_btm:active {
+  cursor: pointer;
+  color: rgba(255, 247, 220, 0.5);
+  text-shadow: 0 0 5px rgba(255, 200, 0, 0.5);
 }
 
 
@@ -19,7 +33,7 @@
   justify-self: center;
   display: block;
   background-color: transparent;
-  color: #ffffff5e;
+
   font-size: 1.5rem;
   font-variation-settings:
     'FILL' 1,
@@ -41,5 +55,12 @@
   margin-top: 0.6rem;
   font-size: 0.8rem;
   display: block;
-  color: #ffffff5e;
+}
+
+
+
+.isChosen>.btm_icon,
+.isChosen>.btm_title {
+  color: rgba(255, 200, 0, 0.3);
+  text-shadow: 0 0 5px rgba(255, 200, 0, 0.5);
 }
