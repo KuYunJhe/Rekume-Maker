@@ -18,7 +18,7 @@
 
 .glassMaterial:hover {
     transition: transform 0.6s ease, box-shadow 0.2s ease;
-    transform: translateY(-5px);
+    /* transform: translateY(-5px); */
     box-shadow: 2px 4px 2rem rgba(0, 0, 0, 0.2);
 }
 

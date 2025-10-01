@@ -1,0 +1,187 @@
+.NormFieldBlock {
+
+  >label {
+    margin-bottom: 1rem;
+  }
+
+  >input,
+  >textarea {
+    /*-------自身排版-------*/
+    width: 100%;
+    max-width: 100%;
+    padding: 0 1rem;
+    border-radius: 50rem;
+    outline: 1px solid rgba(255, 255, 255, 0.2);
+    border: none;
+    background-color: transparent;
+
+
+
+    /*-------輸入內容 文字樣式-------*/
+
+    color: rgb(255, 255, 255);
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.3));
+    font-family: "Kaisei Decol", "Playfair Display", "Noto Serif TC", serif;
+    font-optical-sizing: auto;
+    font-size: 1rem;
+    font-weight: 500;
+    font-style: normal;
+    line-height: 2rem;
+  }
+
+
+  >input:focus,
+  >textarea:focus {
+    outline: none;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+
+  /* >input::placeholder,
+  >textarea::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+    filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.2));
+    opacity: 1;
+  } */
+
+
+
+
+  /* 預設狀態下的日曆圖標 */
+  >input[type="month"]::-webkit-calendar-picker-indicator {
+    opacity: 0.3;
+    filter: invert(1);
+    /* 將圖標變為白色 */
+    right: 1rem;
+    cursor: pointer;
+  }
+
+  /* focus 時顯示日曆圖標 */
+  /* >input[type="month"]:focus::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 1;
+    position: absolute;
+    right: 1rem;
+    pointer-events: all;
+  } */
+
+}
+
+.descriptItemsField {
+
+  .descriptLabel {
+    margin-bottom: 1rem;
+  }
+
+  .descriptItemAddBtn {
+    margin-top: 0.5rem;
+  }
+
+  display: flex;
+  flex-direction: column;
+}
+
+.descriptItemBlock {
+
+
+  display: flex;
+  /* flex-direction: column; */
+  /* gap: 0.5rem; */
+  justify-content: space-between;
+  align-items: center;
+
+  /* 項目間隔線 */
+  padding: 0.5rem 0 ;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+
+  .descriptItemDeleteBtn {
+    padding: 0.25rem 0.5rem;
+    line-height: 0rem;
+  }
+
+
+  .descriptItemFieldBlock {
+
+    .descriptItemField{
+      margin: 1rem 0;
+      /* outline: 5px solid rgba(255, 255, 255, 1); */
+    }
+    label {
+      margin-bottom: 0.25rem;
+      padding-left: 1rem;
+
+      color: rgba(255, 255, 255, 0.5);
+      font-family: "Kaisei Decol", "Playfair Display", "Noto Serif TC", serif;
+      font-optical-sizing: auto;
+      font-size: 0.8rem;
+      font-weight: 500;
+      font-style: normal;
+      /* line-height: 0rem; */
+    }
+
+
+    input,
+    textarea {
+      /*-------自身排版-------*/
+      width: 100%;
+      max-width: 100%;
+      padding: 0 1rem;
+      border-radius: 50rem;
+      outline: 1px solid rgba(255, 255, 255, 0.2);
+      border: none;
+      background-color: transparent;
+
+
+
+      /*-------輸入內容 文字樣式-------*/
+
+      color: rgb(255, 255, 255);
+      filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.3));
+      font-family: "Kaisei Decol", "Playfair Display", "Noto Serif TC", serif;
+      font-optical-sizing: auto;
+      font-size: 1rem;
+      font-weight: 500;
+      font-style: normal;
+      line-height: 2rem;
+    }
+
+
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border: none;
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+  }
+}
+
+
+textarea {
+  resize: vertical;
+  /* 只允許垂直方向調整大小 */
+  min-height: 4rem;
+  /* 最小高度 */
+  max-height: 20rem;
+  /* 最大高度，可依需求調整 */
+  width: 100%;
+  /* 固定寬度 */
+  border-radius: 1rem;
+  /* 改用較小的圓角，讓多行文字看起來更協調 */
+}
+
+/* 如果要完全禁止寬度調整，可以加入以下樣式 */
+textarea::-webkit-resizer {
+  /* display: none; */
+  /* 隱藏 Chrome/Safari 的調整手柄 */
+}
+
+label {
+  display: block;
+  /* 或是用 inline-block */
+  font-size: 1rem;
+  font-weight: 300;
+  color: #ffffff;
+  /* margin: 0.5rem 0; */
+  /* padding-left: 1rem; */
+}

@@ -4,7 +4,8 @@ import classNames from "classnames";
 import styles from "../styles/InputArea.module.css";
 import styles_Glass from "../styles/Glass.module.css";
 
-import LeftArea from "../components/LeftArea.jsx";
+import ItemPanel from "./ItemPanel.jsx";
+
 import { useLocalStorage } from "../hooks/useLocalStorage.jsx";
 import {
   ResumeItemCollection,
@@ -42,8 +43,25 @@ export default function InputArea({ currentType }) {
     [currentType, storedResume]
   );
 
+  // =============================================================
+  // =============================================================
+  // =============================================================
+
   // 根據 currentType 取得對應的欄位設定規則
   const schema = fieldSchemas[currentType] || [];
+  const schemaLeft = useMemo(
+    () =>
+      schema.filter((f) => (f.displayPanel ?? "left") === "left" && f.display),
+    [schema]
+  );
+  const schemaRight = useMemo(
+    () =>
+      schema.filter((f) => (f.displayPanel ?? "left") === "right" && f.display),
+    [schema]
+  );
+  // =============================================================
+  // =============================================================
+  // =============================================================
 
   // 存放當前表單欄位內既有資料的狀態
   const [InputContent, setInputContent] = useState([]);
@@ -104,17 +122,22 @@ export default function InputArea({ currentType }) {
   function handleItemContentChange(name, value, itemIndex) {
     //
     // 更新 InputContent 狀態
-    setInputContent((prev) => {
-      // 取得指定 item
-      const next = [...prev];
+    setInputContent((prevInputContent) => {
+      //
+      // 取得目前的 InputContent
+      const nextInputContent = [...prevInputContent];
 
-      // 更新指定 item 的欄位
-      const updated = { ...next[itemIndex], [name]: value };
-      next[itemIndex] = updated;
+      // 更新指定 item： 找出 InputContent 中指定 index 的 item ，更新他的欄位
+      const updatedItem = { ...nextInputContent[itemIndex], [name]: value };
 
-      // 只 upsert 單一項而非整批
-      commit((Itemcol) => Itemcol.update(updated));
-      return next;
+      // 更新 InputContent
+      nextInputContent[itemIndex] = updatedItem;
+
+      // 提交更新資料到資料庫
+      commit((Itemcol) => Itemcol.update(updatedItem));
+
+      // 回傳更新新的輸入欄位狀態
+      return nextInputContent;
     });
   }
 
@@ -122,6 +145,7 @@ export default function InputArea({ currentType }) {
   function handleAddNewItem() {
     //
     // 新增一個空的履歷項目
+    pendingLastIndexFlag.current = true; // 等同步後選到最後一筆
     commit((Itemcol) =>
       Itemcol.add({
         itemType: currentType,
@@ -137,11 +161,10 @@ export default function InputArea({ currentType }) {
     commit((Itemcol) => Itemcol.remove((item) => item.id === id));
   }
 
-  // 單一封裝提交入口：更新 resumeCollection + 資料儲存到 localStorage
+  // 封裝提交單一入口：更新 resumeCollection + 資料儲存到 localStorage
   function commit(mutator) {
     //
-
-    // 更新本地資料庫狀態，把 resumeCollection 傳入回調函數
+    // 更新本地資料庫狀態，把 resumeCollection 傳入回調函數，包含 item 的新增、更新內容、刪除等操作
     mutator(ItemCollection.current);
 
     //  Resume 實例 -> 資料陣列，用以存回 localStorage
@@ -149,98 +172,152 @@ export default function InputArea({ currentType }) {
   }
   // =============================================================
 
-  // 渲染 item 中單一欄位的函數
-  function renderInputField(item, field, itemIndex) {
+  // 當前編輯的項目索引
+  const [itemIndex, setItemIndex] = useState(0);
+
+  // 一個 Flag：表示 itemIndex 正在等待切到最新項目
+  const pendingLastIndexFlag = useRef(false);
+
+  // 以 useEffect 監控 InputContent 的變化
+  useEffect(() => {
     //
+    // 在 InputContent 更新後處理待選最新項目
+    if (pendingLastIndexFlag.current && InputContent.length > 0) {
+      // 切換到最後一個項目
+      setItemIndex(InputContent.length - 1);
 
-    // 不顯示的欄位不渲染
-    if (!field.display) return null;
+      // 清除旗標
+      pendingLastIndexFlag.current = false;
+    }
+  }, [InputContent]);
 
-    // 設定 key
-    const key = `${item.id || itemIndex}-${field.name}`;
+  // 當 currentType 切換時，重設 itemIndex 為 0
+  useEffect(() => {
+    setItemIndex(0);
+  }, [currentType]);
 
-    // 處理 descriptItems 欄位
-    if (field.name === "descriptItems") {
-      return (
-        <div
-          key={key}
-          className={classNames(styles_Glass.glassMaterial, styles.inputBlock)}
-        >
-          <h3>{field.label}</h3>
-          <InputDescriptField
-            field={field}
-            value={Array.isArray(item.descriptItems) ? item.descriptItems : []} // 確保 value 是陣列
-            onChange={(fname, value) =>
-              handleItemContentChange(fname, value, itemIndex)
-            }
-          />
-        </div>
-      );
+  function itemSwitchController(Index) {
+    // 這裡可以根據 itemIndex 顯示或隱藏特定的控制項
+
+    // 邊界檢查
+    if (Index < 0) {
+      setItemIndex(0);
+      return;
+    }
+    if (Index >= InputContent.length) {
+      setItemIndex(InputContent.length - 1);
+      return;
     }
 
-    // 處理一般欄位
-    return (
-      <div
-        key={key}
-        className={classNames(styles_Glass.glassMaterial, styles.inputBlock)}
-      >
-        <InputField
-          field={field}
-          value={item[field.name] ?? ""}
-          onChange={(fname, value) =>
-            handleItemContentChange(fname, value, itemIndex)
-          }
-        />
-      </div>
-    );
+    // 更新當前索引
+    setItemIndex(Index);
   }
 
   return (
     <>
-      <form className={classNames(styles_Glass.glass, styles.container)}>
-        <div className={styles.container}>
-          {
-            // 遍歷每個 item 的內容
-            InputContent.map((item, index) => (
-              <div key={item.id || index} className={styles.itemContainer}>
-                {
-                  // 遍歷每條欄位設定的規則，進行欄位渲染
-                  schema.map((field) => renderInputField(item, field, index))
-                }
+      <div className={styles.itemFieldContainer}>
+        {InputContent[itemIndex] && (
+          <ItemPanel
+            key={InputContent[itemIndex].id || itemIndex}
+            item={InputContent[itemIndex]}
+            itemIndex={itemIndex}
+            schemaLeft={schemaLeft}
+            schemaRight={schemaRight}
+            onFieldChange={handleItemContentChange}
+            onDelete={handleDeleteItem}
+            multipleItems={currentType !== "Profile"}
+          />
+        )}
+      </div>
 
-                {
-                  // 刪除 item 按鈕（Profile 類型不顯示）
-                  currentType !== "Profile" && (
-                    <button
-                      type="button"
-                      className={classNames(
-                        styles_Glass.glassMaterial,
-                        styles.deleteItemBtn
-                      )}
-                      onClick={() => handleDeleteItem(item.id)}
-                    >
-                      <span className="material-symbols-outlined">delete</span>
-                    </button>
-                  )
-                }
-              </div>
-            ))
-          }
-        </div>
-      </form>
+      {
+        // 項目切換控制（僅在多項目類型顯示）
+        currentType !== "Profile" && (
+          <div
+            className={classNames(
+              styles.itemSwitchController,
+              styles_Glass.glassMaterial
+            )}
+            style={{ left: "36rem" }}
+          >
+            <button
+              type="button"
+              className={classNames(
+                // styles_Glass.glassMaterial,
+                styles.itemSwitchBtn
+              )}
+              onClick={() => itemSwitchController(itemIndex - 1)}
+            >
+              <span className="material-symbols-outlined">chevron_left</span>
+            </button>
+            <button
+              type="button"
+              className={classNames(
+                // styles_Glass.glassMaterial,
+                styles.itemSwitchBtn
+              )}
+              onClick={() => itemSwitchController(itemIndex + 1)}
+            >
+              <span className="material-symbols-outlined">chevron_right</span>
+            </button>
+          </div>
+        )
+      }
 
-      {currentType !== "Profile" && (
-        <button
-          type="button"
-          onClick={handleAddNewItem}
-          className={classNames(
-            styles_Glass.glassMaterial,
-            styles.addNewItemBtn
-          )}
-        >
-          新增項目
-        </button>
-      )}
+      {
+        // 項目指示（目前第幾項 / 共幾項）（僅在多項目類型顯示）
+        currentType !== "Profile" && (
+          <div
+            className={classNames(
+              styles_Glass.glassMaterial,
+              styles.deleteItemBtn,
+              styles.addNewItemBtn
+            )}
+            style={{ left: "60rem" }}
+          >
+            {itemIndex + 1} / {InputContent.length}
+          </div>
+        )
+      }
+
+      {
+        // 刪除項目控制（僅在多項目類型顯示）
+        currentType !== "Profile" && (
+          <button
+            type="button"
+            className={classNames(
+              styles_Glass.glassMaterial,
+              styles.deleteItemBtn,
+              styles.addNewItemBtn
+            )}
+            style={{ left: "24rem" }}
+            onClick={() => {
+              handleDeleteItem(InputContent[itemIndex].id);
+              itemSwitchController(itemIndex - 1);
+            }}
+          >
+            <span className="material-symbols-outlined">delete</span>
+          </button>
+        )
+      }
+
+      {
+        // 新增項目按鈕 (Profile 不顯示)
+        currentType !== "Profile" && (
+          <button
+            type="button"
+            className={classNames(
+              styles_Glass.glassMaterial,
+              styles.addNewItemBtn
+            )}
+            onClick={() => {
+              handleAddNewItem();
+            }}
+          >
+            新增項目
+          </button>
+        )
+      }
 
       <button
         type="button"
@@ -257,7 +334,7 @@ export default function InputArea({ currentType }) {
           console.log(storedResume);
         }}
         className={classNames(styles_Glass.glassMaterial, styles.addNewItemBtn)}
-        style={{ left: "24rem" }}
+        style={{ left: "48rem" }}
       >
         查看履歷資料
       </button>

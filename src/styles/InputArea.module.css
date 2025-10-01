@@ -1,7 +1,8 @@
-.container {
+.itemFieldContainer {
 
-  /* background-color: rgba(0, 255, 21, 0.5); */
 
+
+  /* background-color: rgba(73, 243, 88, 0.719); */
 
   position: absolute;
   top: 0;
@@ -11,14 +12,72 @@
 
   padding: 5rem 5rem 8rem 5rem;
 
+}
+
+.itemPanel {
+  /* 顯示輸入面板範圍，分割左右欄位，空下中間區域 */
+
+
+  /* background-color: rgba(73, 166, 243, 0.719); */
+
   display: grid;
   grid-template-columns: 1fr 40rem 1fr;
 
   column-gap: 3rem;
 
-  justify-items: center;
+  justify-items: stretch;
   align-items: start;
 }
+
+
+.leftPanel {
+  /* background-color: rgba(243, 73, 192, 0.719); */
+
+  grid-column: 1 / 2;
+
+
+  /* 子空間 */
+
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+
+}
+
+
+
+.rightPanel {
+  /* background-color: rgba(192, 73, 243, 0.719); */
+
+  grid-column: 3 / 4;
+}
+
+
+.inputBlock {
+  /* background-color: rgba(73, 243, 101, 0.719); */
+  padding: 1rem;
+}
+
+
+
+
+
+/* .inputBlock {
+  width: 100%;
+  height: fit-content;
+  padding: 0.5rem;
+  padding-left: 1rem;
+  margin-bottom: 2rem;
+} */
+
+
+
+
+
+
+
+
 
 
 .addNewItemBtn {
@@ -28,6 +87,31 @@
 
   width: 10rem;
   height: 2rem;
+}
+
+.itemSwitchController {
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 
 
+  >button {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+
+    border: none;
+    outline: none;
+    cursor: pointer;
+
+    background-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+
+    transition: background-color 0.3s ease;
+  }
 }

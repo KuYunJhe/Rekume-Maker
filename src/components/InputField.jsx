@@ -1,20 +1,11 @@
 import React from "react";
 
+import classNames from "classnames";
+import styles from "../styles/InputField.module.css";
+import styles_Glass from "../styles/Glass.module.css";
+
 export function InputField({ field, value, onChange }) {
   const { name, label, type, required } = field;
-
-  // 處理 textarea 類型
-  if (type === "textarea") {
-    return (
-      <div>
-        <label>{label}</label>
-        <textarea
-          value={value || ""}
-          onChange={(e) => onChange(name, e.target.value)}
-        />
-      </div>
-    );
-  }
 
   // 處理其他 input 類型
   const inputType = (() => {
@@ -35,13 +26,38 @@ export function InputField({ field, value, onChange }) {
         return "password";
       case "hidden":
         return "hidden";
-      default:
+      case "text":
         return "text";
+      default:
+        return "textarea";
     }
   })();
 
+  // 處理 textarea 類型
+  if (inputType === "textarea") {
+    return (
+      <div
+        className={classNames(
+          // styles_Glass.glassMaterial,
+          styles.NormFieldBlock
+        )}
+      >
+        <label>{label}</label>
+        <textarea
+          value={value || ""}
+          onChange={(e) => onChange(name, e.target.value)}
+        />
+      </div>
+    );
+  }
+
   return (
-    <div>
+    <div
+      className={classNames(
+        // styles_Glass.glassMaterial,
+        styles.NormFieldBlock
+      )}
+    >
       <label>{label}</label>
       <input
         type={inputType}
@@ -54,7 +70,7 @@ export function InputField({ field, value, onChange }) {
 }
 
 export function InputDescriptField({ field, value, onChange }) {
-  const { name, descriptTitle_, deleteDescItemBtn } = field;
+  const { name, label, descriptTitle_, deleteDescItemBtn } = field;
 
   const handleDescriptItemChange = (descItemIndex, descItemField, newValue) => {
     // 複製目前的資料庫 Data，一個 descriptItems 陣列
@@ -74,92 +90,139 @@ export function InputDescriptField({ field, value, onChange }) {
   };
 
   return (
-    <div>
-      {value.map((descriptItem, descItemIndex) => (
-        <div key={`${descriptItem}-desc-${descItemIndex}`}>
-          <label>{field.descriptContent_Label}</label>
-          {
-            // 決定 descriptContent 的輸入框類型
-            field.descriptContent_type === "textarea" ? (
-              <textarea
-                value={descriptItem.descriptContent || ""}
-                onChange={(e) =>
-                  handleDescriptItemChange(
-                    descItemIndex,
-                    "descriptContent",
-                    e.target.value
-                  )
-                }
-              />
-            ) : (
-              <input
-                type={field.descriptContent_type}
-                value={descriptItem.descriptContent || ""}
-                onChange={(e) =>
-                  handleDescriptItemChange(
-                    descItemIndex,
-                    "descriptContent",
-                    e.target.value
-                  )
-                }
-              />
-            )
-          }
-
-          {
-            // 決定是否顯示 descriptTitle 的輸入框
-            descriptTitle_ && (
-              <>
-                <label>{field.descriptTitle_Label}</label>
+    <div
+      className={classNames(
+        // styles_Glass.glassMaterial,
+        styles.descriptItemsField
+      )}
+    >
+      <h3
+        className={classNames(
+          styles.descriptLabel
+          // styles_Glass.glassMaterial
+        )}
+      >
+        {label}
+      </h3>
+      {
+        // 渲染每個 descriptItem 的輸入框
+        value.map((descriptItem, descItemIndex) => (
+          <div
+            key={`${descriptItem}-desc-${descItemIndex}`}
+            className={classNames(
+              styles.descriptItemBlock
+              // styles_Glass.glassMaterial
+            )}
+          >
+            <div
+              className={classNames(
+                styles.descriptItemFieldBlock
+                // styles_Glass.glassMaterial
+              )}
+            >
+              <div
+                className={classNames(
+                  styles.descriptItemField
+                  // styles_Glass.glassMaterial
+                )}
+              >
+                <label>{field.descriptContent_Label}</label>
                 {
-                  // 決定 descriptTitle 的輸入框類型
-                  field.descriptTitle_type === "textarea" ? (
+                  // 決定 descriptContent 的輸入框類型
+                  field.descriptContent_type === "textarea" ? (
                     <textarea
-                      value={descriptItem.descriptTitle || ""}
+                      value={descriptItem.descriptContent || ""}
                       onChange={(e) =>
                         handleDescriptItemChange(
                           descItemIndex,
-                          "descriptTitle",
+                          "descriptContent",
                           e.target.value
                         )
                       }
                     />
                   ) : (
                     <input
-                      type={field.type}
-                      value={descriptItem.descriptTitle || ""}
+                      type={field.descriptContent_type}
+                      value={descriptItem.descriptContent || ""}
                       onChange={(e) =>
                         handleDescriptItemChange(
                           descItemIndex,
-                          "descriptTitle",
+                          "descriptContent",
                           e.target.value
                         )
                       }
                     />
                   )
                 }
-              </>
-            )
-          }
+              </div>
 
-          {
-            // 刪除描述項目的按鈕
-            // (如果欄位設定有 deleteDescItemBtn 才顯示)
-            deleteDescItemBtn && (
-              <button
-                type="button"
-                onClick={() => {
-                  const updatedValue = [...value];
-                  updatedValue.splice(descItemIndex, 1);
-                  onChange(name, updatedValue);
-                }}
+              <div
+                className={classNames(
+                  styles.descriptItemField
+                  // styles_Glass.glassMaterial
+                )}
               >
-                <span className="material-symbols-outlined">delete</span>
-              </button>
-            )
-          }
-        </div>
-      ))}
+                {
+                  // 決定是否顯示 descriptTitle 的輸入框
+                  descriptTitle_ && (
+                    <>
+                      <label>{field.descriptTitle_Label}</label>
+                      {
+                        // 決定 descriptTitle 的輸入框類型
+                        field.descriptTitle_type === "textarea" ? (
+                          <textarea
+                            value={descriptItem.descriptTitle || ""}
+                            onChange={(e) =>
+                              handleDescriptItemChange(
+                                descItemIndex,
+                                "descriptTitle",
+                                e.target.value
+                              )
+                            }
+                          />
+                        ) : (
+                          <input
+                            type={field.type}
+                            value={descriptItem.descriptTitle || ""}
+                            onChange={(e) =>
+                              handleDescriptItemChange(
+                                descItemIndex,
+                                "descriptTitle",
+                                e.target.value
+                              )
+                            }
+                          />
+                        )
+                      }
+                    </>
+                  )
+                }
+              </div>
+            </div>
+
+            {
+              // 刪除描述項目的按鈕
+              // (如果欄位設定有 deleteDescItemBtn 才顯示)
+              deleteDescItemBtn && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    const updatedValue = [...value];
+                    updatedValue.splice(descItemIndex, 1);
+                    onChange(name, updatedValue);
+                  }}
+                  className={classNames(
+                    styles_Glass.glassMaterial,
+                    styles.descriptItemDeleteBtn
+                  )}
+                >
+                  <span className="material-symbols-outlined">cancel</span>
+                </button>
+              )
+            }
+          </div>
+        ))
+      }
 
       {
         // 新增描述項目的按鈕
@@ -168,6 +231,10 @@ export function InputDescriptField({ field, value, onChange }) {
           <>
             <button
               type="button"
+              className={classNames(
+                styles_Glass.glassMaterial,
+                styles.descriptItemAddBtn
+              )}
               onClick={() => {
                 // 在 descriptItems 陣列中新增一個空的 descriptItem
                 // 如果原本沒有 descriptItems 陣列，則建立一個新的陣列
