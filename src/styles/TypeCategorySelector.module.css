@@ -1,9 +1,19 @@
 .container {
 
   display: flex;
-  padding: 0 2rem;
+  /* flex-direction: column; */
+  /* padding: 0 2rem; */
   /* background-color: rgba(204, 62, 62, 0.678); */
   /* filter: invert(0); */
+
+  border-radius: 0 0 14px 14px;
+
+  border-top: none;
+
+}
+
+.container::before {
+  padding-top: 0;
 }
 
 
@@ -11,28 +21,18 @@
 .operate_bar_btm {
   padding: 0.7rem;
   border: inherit;
-  width: 8rem;
+  width: 6.5rem;
+  color: rgba(50, 50, 50, 0.5);
+
   background-color: transparent;
 
-  /* filter: invert(1); */
 
-  color: rgba(255, 255, 255, 0.3);
-
-
-  color: rgba(0, 0, 0);
 }
-
-.operate_bar_btm:active {
-  cursor: pointer;
-  color: rgba(255, 247, 220, 0.5);
-  text-shadow: 0 0 5px rgba(255, 200, 0, 0.5);
-}
-
 
 .btm_icon {
   justify-self: center;
   display: block;
-  background-color: transparent;
+
 
   font-size: 1.5rem;
   font-variation-settings:
@@ -47,20 +47,29 @@
   transform: scale(1.3);
   /* 為了讓圖標和文字對齊，你可能需要微調 */
   /* vertical-align: middle; */
+
 }
 
 
 .btm_title {
+
+
   justify-self: center;
   margin-top: 0.6rem;
-  font-size: 0.8rem;
+  font-size: 0.6rem;
   display: block;
 }
 
-
+.operate_bar_btm:active {
+  cursor: pointer;
+  color: rgba(255, 103, 43, 0.5);
+  text-shadow: 0 0 5px rgba(255, 200, 0, 0.5);
+}
 
 .isChosen>.btm_icon,
 .isChosen>.btm_title {
-  color: rgba(255, 200, 0, 0.3);
+  color: rgba(255, 200, 0, 0.8);
   text-shadow: 0 0 5px rgba(255, 200, 0, 0.5);
+  font-variation-settings:
+    'FILL' 1;
 }

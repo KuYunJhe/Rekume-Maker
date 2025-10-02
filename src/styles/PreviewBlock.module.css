@@ -1,35 +1,191 @@
 .container {
 
-  color: aqua;
-  font-size: 2rem;
-  background-color: rgb(255, 255, 255);
+  font-family: "Figtree", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 
-  margin-top: 2rem;
+
+
+  background-color: transparent;
+
+  margin-bottom: 1rem;
+
+  /* outline: rgb(0, 255, 0) solid 2px; */
+}
+
+.categoryTitle {
+  color: rgb(0, 0, 0);
+  font-size: 1.2rem;
+  padding-bottom: 0.3rem;
+  margin-bottom: 0.3rem;
+  border-bottom: 1.5px solid rgb(100, 100, 100);
+}
+
+
+
+.itemFirstLineContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.3rem;
+}
+
+.itemFirstLineLeft {
+  display: flex;
 }
 
 .itemTitle {
-
-  color: rgb(0, 255, 0);
-  font-size: 1.5rem;
-
-}
-
-
-.categoryTitle{
-
-  color: rgb(255, 0, 255);
-  font-size: 1.5rem;
-}
-
-
-.descriptContent{
-
   color: rgb(0, 0, 0);
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
-.descriptTitle{
+.itemLink {
   color: rgb(23, 114, 189);
-  font-size: 1rem;
+  font-size: 0.9rem;
+  text-decoration: none;
+  /* 連結移除底線 */
+}
+
+.itemLink::before {
+  white-space: pre-wrap;
+  /* 保留空格 */
+  content: " | ";
+  color: rgb(0, 0, 0);
+}
+
+
+.itemTimeContainer {
+
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+  align-items: center;
+  justify-items: end;
+  color: rgb(0, 0, 0);
+  font-size: 0.9rem;
+
+  .itemTime {}
+
+  .startTime {}
+
+  .endTime {
+    justify-items: end;
+  }
+
+}
+
+.descriptItems {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+  margin-bottom: 0.3rem;
+  font-size: 0.7rem;
+
+  .descriptContent {
+    color: rgb(130, 130, 130);
+
+    display: inline-block;
+
+    /* ---- 上下間距 ---- */
+    line-height: 0.8rem;
+
+
+    /* ---- 左右間距 ---- */
+    padding-left: 0.5rem;
+    text-indent: -0.5rem;
+    /* 第一行縮排 */
+    /* text-align: justify; */
+    /* 兩端對齊 */
+
+  }
+
+  .descriptContent::before {
+    content: " • ";
+  }
+
+  .descriptTitle {
+    color: rgb(23, 114, 189);
+
+
+    display: inline-block;
+
+    /* ---- 上下間距 ---- */
+
+    line-height: 0.7rem;
+
+    /* ---- 左右間距 ---- */
+    padding-left: 1rem;
+    text-indent: -0.6rem;
+    /* 第一行縮排 */
+    text-align: justify;
+    /* 兩端對齊 */
+
+    text-decoration: none;
+    /* 連結移除底線 */
+
+  }
+}
+
+
+.itemSubTitle {
+  color: rgb(0, 0, 0);
+  font-size: 0.9rem;
+
+}
+
+
+.profileContent {
+
+  .descriptContent {
+    /* 取消懸掛縮排 */
+    padding-left: 0;
+    text-indent: 0;
+  }
+
+  .descriptContent::before {
+    /* 取消前置符號 */
+    content: "";
+  }
+
+  .profileItemTitle {
+    color: rgb(0, 0, 0);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .profileItemSubTitle {
+    color: rgb(0, 0, 0);
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+  }
+}
+
+.skillContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+
+  .skillItem {
+    display: flex;
+    flex-direction: row;
+    gap: 0.3rem;
+
+    .skillItemTitle {
+      /* color: rgb(103, 163, 163); */
+    }
+
+    .skillItemTitle::after {
+      content: ": ";
+    }
+
+    .skillItemSubTitle {
+      /* color: rgb(233, 195, 124); */
+      color: rgb(130, 130, 130);
+    }
+  }
+
 
 }

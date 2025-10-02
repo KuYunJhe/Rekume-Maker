@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "../styles/InfoCategorySelector.module.css";
+import styles from "../styles/TypeCategorySelector.module.css";
 import styles_Glass from "../styles/Glass.module.css";
 import classNames from "classnames";
 
@@ -25,7 +25,7 @@ const items = [
   {
     id: crypto.randomUUID(),
     iconName: "stars_2",
-    title: "ACH.",
+    title: "ACHIEVEMENTS",
     type: "Achievement",
   },
   {
@@ -42,7 +42,7 @@ const items = [
   },
 ];
 
-export default function InfoCategorySelector({setCurrentType}) {
+export default function TypeCategorySelector({ setCurrentType }) {
   // 記錄目前被選中的按鈕 ID
   const [selectedId, setSelectedId] = useState(items[0].id);
 
@@ -58,20 +58,22 @@ export default function InfoCategorySelector({setCurrentType}) {
       setCurrentType(selectedItem.type);
     }
 
-    console.log("Selected Type:", selectedItem.type); 
+    console.log("Selected Type:", selectedItem.type);
   };
 
   return (
     <>
       <div
-        className={classNames(styles_Glass.glassMaterial, {
+        className={classNames({
+          [styles_Glass.glassMaterial]: true,
           [styles.container]: true,
         })}
       >
         {items.map((item) => (
           <button
             key={item.id}
-            className={classNames(styles.operate_bar_btm, {
+            className={classNames({
+              [styles.operate_bar_btm]: true,
               [styles.isChosen]: selectedId === item.id,
             })}
             onClick={() => handleItemClick(item.id)}

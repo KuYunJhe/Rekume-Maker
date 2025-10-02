@@ -1,42 +1,15 @@
 .NormFieldBlock {
 
-  >label {
-    margin-bottom: 1rem;
-  }
-
-  >input,
-  >textarea {
+  input,
+  textarea {
     /*-------自身排版-------*/
     width: 100%;
     max-width: 100%;
-    padding: 0 1rem;
     border-radius: 50rem;
-    outline: 1px solid rgba(255, 255, 255, 0.2);
-    border: none;
-    background-color: transparent;
-
-
 
     /*-------輸入內容 文字樣式-------*/
-
-    color: rgb(255, 255, 255);
-    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.3));
-    font-family: "Kaisei Decol", "Playfair Display", "Noto Serif TC", serif;
-    font-optical-sizing: auto;
-    font-size: 1rem;
-    font-weight: 500;
-    font-style: normal;
     line-height: 2rem;
   }
-
-
-  >input:focus,
-  >textarea:focus {
-    outline: none;
-    border: none;
-    background-color: rgba(255, 255, 255, 0.2);
-  }
-
 
   /* >input::placeholder,
   >textarea::placeholder {
@@ -45,11 +18,8 @@
     opacity: 1;
   } */
 
-
-
-
   /* 預設狀態下的日曆圖標 */
-  >input[type="month"]::-webkit-calendar-picker-indicator {
+  input[type="month"]::-webkit-calendar-picker-indicator {
     opacity: 0.3;
     filter: invert(1);
     /* 將圖標變為白色 */
@@ -70,91 +40,195 @@
 
 .descriptItemsField {
 
-  .descriptLabel {
-    margin-bottom: 1rem;
-  }
-
-  .descriptItemAddBtn {
-    margin-top: 0.5rem;
-  }
+  /* ---- 右側 Panel 高度限制 ---- */
+  min-height: 0;
+  max-height: 100%;
 
   display: flex;
   flex-direction: column;
+
+  /* border: springgreen 1px solid; */
+
+
+  .descriptLabel {}
+
+  .descriptItemBlockContainer {
+
+    /* ---- 右側 Panel 高度限制 ---- */
+    min-height: 0;
+
+    /* ---- ItemBlock 排列 ---- */
+    display: flex;
+    flex-direction: column;
+    /* flex: 1 1 auto; */
+
+    /* ---- 版面溢位處裡 ---- */
+    /* 填滿中間可用高度 */
+    overflow-y: auto;
+    /* 捲動 */
+    overscroll-behavior: contain;
+    /* 避免水平捲動 */
+    overflow-x: hidden;
+    scrollbar-width: none;
+
+
+
+
+    .descriptItemAddBtn {
+      width: 70%;
+      align-self: center;
+      padding: 0.3rem 0;
+      margin-top: 1rem;
+      backdrop-filter: none;
+
+      span {
+        font-size: 1.2rem;
+        color: rgba(255, 255, 255, 0.3);
+        vertical-align: middle;
+      }
+    }
+
+    .descriptItemAddBtn:hover {
+      span {
+        font-size: 1.2rem;
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
+
+    .descriptItemAddBtn:active {
+      background-color: rgba(0, 0, 0, 0.1);
+
+      span {
+        color: rgba(255, 255, 255, 0.5);
+        font-variation-settings:
+          'FILL' 1;
+      }
+    }
+  }
 }
 
 .descriptItemBlock {
 
 
   display: flex;
-  /* flex-direction: column; */
-  /* gap: 0.5rem; */
+  gap: 1rem;
   justify-content: space-between;
   align-items: center;
 
   /* 項目間隔線 */
-  padding: 0.5rem 0 ;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
 
   .descriptItemDeleteBtn {
-    padding: 0.25rem 0.5rem;
+    padding: 0.4rem 0.5rem;
     line-height: 0rem;
+    border-radius: 50rem;
+
+    span {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.3);
+      vertical-align: middle;
+    }
   }
 
+  .descriptItemDeleteBtn:hover {
+    background-color: rgba(255, 0, 0, 0.5);
+
+    span {
+      color: rgba(255, 255, 255, 0.7);
+    }
+  }
+
+  .descriptItemDeleteBtn:active {
+    background-color: rgba(150, 0, 0, 0.5);
+
+    span {
+      color: rgba(255, 255, 255, 0.5);
+      font-variation-settings:
+        'FILL' 1;
+    }
+  }
 
   .descriptItemFieldBlock {
 
-    .descriptItemField{
+    .descriptItemField {
       margin: 1rem 0;
-      /* outline: 5px solid rgba(255, 255, 255, 1); */
     }
+
     label {
-      margin-bottom: 0.25rem;
-      padding-left: 1rem;
+      /* display: block; */
+      display: none;
+      margin-bottom: 1rem;
+      padding-left: 0rem;
 
       color: rgba(255, 255, 255, 0.5);
       font-family: "Kaisei Decol", "Playfair Display", "Noto Serif TC", serif;
       font-optical-sizing: auto;
       font-size: 0.8rem;
-      font-weight: 500;
-      font-style: normal;
-      /* line-height: 0rem; */
+      font-weight: 100;
+      font-style: italic;
+      line-height: 0rem;
     }
-
 
     input,
     textarea {
       /*-------自身排版-------*/
       width: 100%;
       max-width: 100%;
-      padding: 0 1rem;
       border-radius: 50rem;
-      outline: 1px solid rgba(255, 255, 255, 0.2);
-      border: none;
-      background-color: transparent;
-
-
 
       /*-------輸入內容 文字樣式-------*/
-
-      color: rgb(255, 255, 255);
-      filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.3));
-      font-family: "Kaisei Decol", "Playfair Display", "Noto Serif TC", serif;
-      font-optical-sizing: auto;
-      font-size: 1rem;
-      font-weight: 500;
-      font-style: normal;
       line-height: 2rem;
-    }
-
-
-    input:focus,
-    textarea:focus {
-      outline: none;
-      border: none;
-      background-color: rgba(255, 255, 255, 0.2);
     }
   }
 }
+
+
+/* ====== 欄位標籤 ====== */
+.itemFieldLabel {
+  display: block;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 1rem;
+
+
+  /* font-family: "Chiron Sung HK", serif; */
+  font-family: "Kaisei Decol", "Playfair Display", "Noto Serif TC", serif;
+  font-optical-sizing: auto;
+  font-size: 1rem;
+  font-weight: 500;
+  font-style: italic;
+}
+
+/* ====== 欄位內容 ====== */
+
+input,
+textarea {
+  /*-------自身排版-------*/
+  border-radius: 50rem;
+  padding: 0 1rem;
+  outline: 1px solid rgba(255, 255, 255, 0.2);
+  border: none;
+  background-color: transparent;
+
+  /*-------輸入內容 文字樣式-------*/
+
+  color: rgb(255, 255, 255);
+  /* font-family: "Chiron Sung HK", serif; */
+  font-family: "Kaisei Decol", "Playfair Display", "Noto Serif TC", serif;
+  font-optical-sizing: auto;
+  font-size: 0.8rem;
+  font-weight: 400;
+  font-style: normal;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
 
 
 textarea {
@@ -174,14 +248,4 @@ textarea {
 textarea::-webkit-resizer {
   /* display: none; */
   /* 隱藏 Chrome/Safari 的調整手柄 */
-}
-
-label {
-  display: block;
-  /* 或是用 inline-block */
-  font-size: 1rem;
-  font-weight: 300;
-  color: #ffffff;
-  /* margin: 0.5rem 0; */
-  /* padding-left: 1rem; */
 }

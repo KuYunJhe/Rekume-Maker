@@ -1,8 +1,6 @@
 import { useMemo } from "react";
 
 import styles from "../styles/PreviewSpace.module.css";
-import styles_Glass from "../styles/Glass.module.css";
-import classNames from "classnames";
 
 import { useLocalStorage } from "../hooks/useLocalStorage.jsx";
 import { createInitialItems } from "../models/containData.jsx";

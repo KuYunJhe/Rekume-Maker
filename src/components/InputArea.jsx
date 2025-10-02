@@ -1,10 +1,9 @@
 import { useState, useRef, useMemo, useEffect } from "react";
-import classNames from "classnames";
 
 import styles from "../styles/InputArea.module.css";
-import styles_Glass from "../styles/Glass.module.css";
 
 import ItemPanel from "./ItemPanel.jsx";
+import ItemsOperateBar from "./ItemsOperateBar.jsx";
 
 import { useLocalStorage } from "../hooks/useLocalStorage.jsx";
 import {
@@ -13,42 +12,76 @@ import {
 } from "../models/containData.jsx";
 import { fieldSchemas } from "../models/fieldSchemas.jsx";
 
-import { InputField, InputDescriptField } from "./InputField";
-
 // 主組件：輸入區域
 
 export default function InputArea({ currentType }) {
   //
+  //
+  // (localStorage)  (Resume 實例)     (當前類型的資料)     (輸入欄位內容)
+  // storedResume → ItemCollection → DataOfCurrentType + schema → InputContent
+  //
+  //
+  // ======================================================================
+  // ======================================================================
+  // ======================================================================
+  // ======================================================================
+  // ==== 本地資料「storedResume」變更 ======================================
 
-  // 讀取本地純陣列 Data
-  // 首次載入時，若 localStorage 沒有資料，則呼叫取得初始空白 Resume
+  // ----
+  // ---- 讀取本地資料「storedResume」
   const [storedResume, setStoredResume] = useLocalStorage(
+    // storedResume：純陣列 Data
+    // 首次載入時，若 localStorage 沒有資料，則呼叫取得初始空白 Resume
     "Resume",
     createInitialItems
   );
 
-  // Data陣列格式轉為 Resume 實例（lazy 初始化），使用 ref 保存
+  // ----
+  // ---- 初始化「ItemCollection」
   const ItemCollection = useRef(
+    // storedResume 陣列格式轉為 Resume 實例「ItemCollection」
+    // lazy 初始化，使用 ref 保存
     ResumeItemCollection.newObjFromArray(storedResume)
   );
 
-  // storedResume 改變時，同步集合
+  // ----
+  // ---- 清除履歷資料(包含本地資料)
+  function handleClearResume() {
+    //
+
+    // 徹底清掉 localStorage
+    localStorage.removeItem("Resume");
+
+    // 建立一份全新的初始空白資料
+    const emptyData = createInitialItems();
+
+    // 立即重建 Resume 實例
+    ItemCollection.current = ResumeItemCollection.newObjFromArray(emptyData);
+
+    // 更新本地狀態：用新的空白資料覆蓋
+    setStoredResume(emptyData);
+
+    // 清空目前的輸入欄位內容
+    setInputContent([]);
+  }
+
+  // ----
+  // ---- storedResume 改變時，同步「ItemCollection」
   useEffect(() => {
     ItemCollection.current = ResumeItemCollection.newObjFromArray(storedResume);
   }, [storedResume]);
 
-  // 依 currentType 抽出對應的 item 陣列
-  const DataOfCurrentType = useMemo(
-    () => ItemCollection.current.getByType(currentType),
-    [currentType, storedResume]
-  );
-
-  // =============================================================
-  // =============================================================
-  // =============================================================
-
-  // 根據 currentType 取得對應的欄位設定規則
+  // ======================================================================
+  // ======================================================================
+  // ======================================================================
+  // ======================================================================
+  // ==== 「schema」欄位設定 ================================================
+  // ----
+  // ---- 根據欄位設定規則（依 currentType）
   const schema = fieldSchemas[currentType] || [];
+
+  // ----
+  // ---- 分割為左右兩邊的 schema 陣列
   const schemaLeft = useMemo(
     () =>
       schema.filter((f) => (f.displayPanel ?? "left") === "left" && f.display),
@@ -59,22 +92,27 @@ export default function InputArea({ currentType }) {
       schema.filter((f) => (f.displayPanel ?? "left") === "right" && f.display),
     [schema]
   );
-  // =============================================================
-  // =============================================================
-  // =============================================================
 
-  // 存放當前表單欄位內既有資料的狀態
+  // ======================================================================
+  // ======================================================================
+  // ======================================================================
+  // ======================================================================
+  // ==== 「InputContent」篩選 =============================================
+  // ----
+  // ---- 依 currentType 抽出對應的 DataOfCurrentType
+  const DataOfCurrentType = useMemo(
+    () => ItemCollection.current.getByType(currentType),
+    [currentType, storedResume]
+  );
+  // ----
+  // ---- 「InputContent」：存放當前表單欄位內既有資料的狀態
   const [InputContent, setInputContent] = useState([]);
 
-  // 輕量比較：只檢查長度與 id
-  function sameList(a, b) {
-    if (a.length !== b.length) return false;
-    for (let i = 0; i < a.length; i++) if (a[i].id !== b[i].id) return false;
-    return true;
-  }
-
-  // 同步暫存（只在資料集合變動或切換類型）
+  // ----
+  // ---- 以 DataOfCurrentType 、schema 同步 InputContent
   useEffect(() => {
+    // 同步暫存（只在資料集合變動或切換類型）
+
     // 檢查 DataOfCurrentType 是否存在
     if (!DataOfCurrentType) return;
     // 檢查是否與 InputContent 相同
@@ -95,30 +133,24 @@ export default function InputArea({ currentType }) {
     setInputContent(init);
   }, [DataOfCurrentType, schema, currentType]);
 
-  // =============================================================
+  // ----
+  // ---- 比較 InputContent 與 DataOfCurrentType 是否相同
+  function sameList(a, b) {
+    // 輕量比較：只檢查長度與 id
 
-  // 清除履歷資料(包含本地資料)
-  function handleClearResume() {
-    //
-
-    // 徹底清掉 localStorage
-    localStorage.removeItem("Resume");
-
-    // 建立一份全新的初始空白資料
-    const emptyData = createInitialItems();
-
-    // 立即重建 Resume 實例
-    ItemCollection.current = ResumeItemCollection.newObjFromArray(emptyData);
-
-    // 更新本地狀態：用新的空白資料覆蓋
-    setStoredResume(emptyData);
-
-    // 清空目前的輸入欄位內容
-    setInputContent([]);
+    if (a.length !== b.length) return false;
+    for (let i = 0; i < a.length; i++) if (a[i].id !== b[i].id) return false;
+    return true;
   }
 
-  // =============================================================
-  // 單項欄位即時更新（可改成 onBlur 再 commit）
+  // ======================================================================
+  // ======================================================================
+  // ======================================================================
+  // ======================================================================
+  // ====  Item 欄位內容控制 及 提交變更 ======================================
+
+  // ----
+  // ---- 單項欄位即時更新
   function handleItemContentChange(name, value, itemIndex) {
     //
     // 更新 InputContent 狀態
@@ -141,7 +173,8 @@ export default function InputArea({ currentType }) {
     });
   }
 
-  // 新增空白 item
+  // ----
+  // ---- 新增空白 item
   function handleAddNewItem() {
     //
     // 新增一個空的履歷項目
@@ -156,12 +189,14 @@ export default function InputArea({ currentType }) {
     );
   }
 
-  // 刪除指定 item：依 id
+  // ----
+  // ---- 刪除指定 item：依 id
   function handleDeleteItem(id) {
     commit((Itemcol) => Itemcol.remove((item) => item.id === id));
   }
 
-  // 封裝提交單一入口：更新 resumeCollection + 資料儲存到 localStorage
+  // ----
+  // ---- 封裝提交單一入口：更新 resumeCollection + 資料儲存到 localStorage
   function commit(mutator) {
     //
     // 更新本地資料庫狀態，把 resumeCollection 傳入回調函數，包含 item 的新增、更新內容、刪除等操作
@@ -170,15 +205,22 @@ export default function InputArea({ currentType }) {
     //  Resume 實例 -> 資料陣列，用以存回 localStorage
     setStoredResume(ItemCollection.current.toArray());
   }
-  // =============================================================
 
-  // 當前編輯的項目索引
+  // ======================================================================
+  // ======================================================================
+  // ======================================================================
+  // ======================================================================
+  // ==== 當前 itemIndex 控制 ==============================================
+  //
+  // ---- 當前編輯的項目索引
   const [itemIndex, setItemIndex] = useState(0);
 
-  // 一個 Flag：表示 itemIndex 正在等待切到最新項目
+  // ----
+  // ---- 一個 Flag：表示 itemIndex 正在等待切到最新項目
   const pendingLastIndexFlag = useRef(false);
 
-  // 以 useEffect 監控 InputContent 的變化
+  // ----
+  // ---- 以 useEffect 監控 InputContent 的變化
   useEffect(() => {
     //
     // 在 InputContent 更新後處理待選最新項目
@@ -191,14 +233,16 @@ export default function InputArea({ currentType }) {
     }
   }, [InputContent]);
 
-  // 當 currentType 切換時，重設 itemIndex 為 0
+  // ----
+  // ---- 當 currentType 切換時，重設 itemIndex 為 0
   useEffect(() => {
     setItemIndex(0);
   }, [currentType]);
 
+  // ----
+  // ---- 這裡可以根據 itemIndex 顯示或隱藏特定的控制項
   function itemSwitchController(Index) {
-    // 這裡可以根據 itemIndex 顯示或隱藏特定的控制項
-
+    //
     // 邊界檢查
     if (Index < 0) {
       setItemIndex(0);
@@ -212,6 +256,12 @@ export default function InputArea({ currentType }) {
     // 更新當前索引
     setItemIndex(Index);
   }
+
+  // ======================================================================
+  // ======================================================================
+  // ======================================================================
+  // ======================================================================
+  // ======================================================================
 
   return (
     <>
@@ -229,115 +279,16 @@ export default function InputArea({ currentType }) {
           />
         )}
       </div>
-
-      {
-        // 項目切換控制（僅在多項目類型顯示）
-        currentType !== "Profile" && (
-          <div
-            className={classNames(
-              styles.itemSwitchController,
-              styles_Glass.glassMaterial
-            )}
-            style={{ left: "36rem" }}
-          >
-            <button
-              type="button"
-              className={classNames(
-                // styles_Glass.glassMaterial,
-                styles.itemSwitchBtn
-              )}
-              onClick={() => itemSwitchController(itemIndex - 1)}
-            >
-              <span className="material-symbols-outlined">chevron_left</span>
-            </button>
-            <button
-              type="button"
-              className={classNames(
-                // styles_Glass.glassMaterial,
-                styles.itemSwitchBtn
-              )}
-              onClick={() => itemSwitchController(itemIndex + 1)}
-            >
-              <span className="material-symbols-outlined">chevron_right</span>
-            </button>
-          </div>
-        )
-      }
-
-      {
-        // 項目指示（目前第幾項 / 共幾項）（僅在多項目類型顯示）
-        currentType !== "Profile" && (
-          <div
-            className={classNames(
-              styles_Glass.glassMaterial,
-              styles.deleteItemBtn,
-              styles.addNewItemBtn
-            )}
-            style={{ left: "60rem" }}
-          >
-            {itemIndex + 1} / {InputContent.length}
-          </div>
-        )
-      }
-
-      {
-        // 刪除項目控制（僅在多項目類型顯示）
-        currentType !== "Profile" && (
-          <button
-            type="button"
-            className={classNames(
-              styles_Glass.glassMaterial,
-              styles.deleteItemBtn,
-              styles.addNewItemBtn
-            )}
-            style={{ left: "24rem" }}
-            onClick={() => {
-              handleDeleteItem(InputContent[itemIndex].id);
-              itemSwitchController(itemIndex - 1);
-            }}
-          >
-            <span className="material-symbols-outlined">delete</span>
-          </button>
-        )
-      }
-
-      {
-        // 新增項目按鈕 (Profile 不顯示)
-        currentType !== "Profile" && (
-          <button
-            type="button"
-            className={classNames(
-              styles_Glass.glassMaterial,
-              styles.addNewItemBtn
-            )}
-            onClick={() => {
-              handleAddNewItem();
-            }}
-          >
-            新增項目
-          </button>
-        )
-      }
-
-      <button
-        type="button"
-        onClick={handleClearResume}
-        className={classNames(styles_Glass.glassMaterial, styles.addNewItemBtn)}
-        style={{ left: "12rem" }}
-      >
-        清除履歷資料
-      </button>
-
-      <button
-        type="button"
-        onClick={() => {
-          console.log(storedResume);
-        }}
-        className={classNames(styles_Glass.glassMaterial, styles.addNewItemBtn)}
-        style={{ left: "48rem" }}
-      >
-        查看履歷資料
-      </button>
+      <ItemsOperateBar
+        currentType={currentType}
+        InputContent={InputContent}
+        storedResume={storedResume}
+        itemIndex={itemIndex}
+        handleDeleteItem={handleDeleteItem}
+        handleClearResume={handleClearResume}
+        handleAddNewItem={handleAddNewItem}
+        itemSwitchController={itemSwitchController}
+      />
     </>
   );
 }

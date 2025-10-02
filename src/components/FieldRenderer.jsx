@@ -14,33 +14,24 @@ export default function FieldRenderer({
 
   const key = `${item.id || itemIndex}-${field.name}`;
 
-  if (field.name === "descriptItems") {
-    return (
-      <div
-        key={key}
-        className={classNames(styles_Glass.glassMaterial, styles.inputBlock)}
-      >
-        <InputDescriptField
-          field={field}
-          value={Array.isArray(item.descriptItems) ? item.descriptItems : []}
-          onChange={(fname, value) => onFieldChange(fname, value, itemIndex)}
-        />
-      </div>
-    );
-  }
-
   return (
     <div
       key={key}
       className={classNames(styles_Glass.glassMaterial, styles.inputBlock)}
     >
-      <InputField
-        field={field}
-        value={item[field.name] ?? ""}
-        onChange={(fname, value) => {
-          onFieldChange(fname, value, itemIndex);
-        }}
-      />
+      {field.name === "descriptItems" ? (
+        <InputDescriptField
+          field={field}
+          value={Array.isArray(item.descriptItems) ? item.descriptItems : []}
+          onChange={(_fname, value) => onFieldChange(field.name, value, itemIndex)}
+        />
+      ) : (
+        <InputField
+          field={field}
+          value={item[field.name] ?? ""}
+          onChange={(_fname, value) => onFieldChange(field.name, value, itemIndex)}
+        />
+      )}
     </div>
   );
 }

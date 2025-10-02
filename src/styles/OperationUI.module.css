@@ -1,6 +1,30 @@
-.container{
+.container {
 
   /* height: 60rem; */
 
-  /* background-color: aqua; */
+  /* background-color: rgba(208, 255, 0, 0.336); */
+
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+
+  display: grid;
+  grid-template-rows: 5rem 1fr 5rem;
+  justify-items: center;
+}
+
+
+.InputArea_container {
+  min-height: 0;
+  /* background-color: rgba(64, 224, 85, 0.493); */
+}
+
+
+.OperateBar_container {
+  /* background-color: rgba(64, 224, 208, 0.274); */
+
 }

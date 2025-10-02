@@ -1,0 +1,161 @@
+.container {
+
+  /* background-color: aqua; */
+  padding: 0.7rem;
+  width: 40%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+
+  /* justify-items: center; */
+  align-items: center;
+
+  .leftSide {
+    /* --- 自身位置 --- */
+    justify-self: start;
+
+    /* --- 子空間 --- */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .centerSide {
+    /* --- 自身位置 --- */
+    justify-self: center;
+
+    /* --- 子空間 --- */
+
+
+
+    .itemSwitchController {
+      /* background-color: aqua; */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+
+    }
+  }
+
+  .rightSide {
+    /* --- 自身位置 --- */
+    justify-self: end;
+
+    /* --- 子空間 --- */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+
+}
+
+
+
+.itemSwitchBtn {}
+
+.itemSwitchIndexNumber {
+
+  color: rgb(255, 255, 255, 0.7);
+  color: rgba(50, 50, 50, 0.5);
+  /* font-family: "Chiron Sung HK", serif; */
+  font-family: "Kaisei Decol", "Playfair Display", "Noto Serif TC", serif;
+  font-optical-sizing: auto;
+  font-size: 1rem;
+  font-weight: 00;
+  font-style: normal;
+}
+
+.ItemOperateBtn {
+
+  border: none;
+  border-radius: 10px;
+
+
+  outline: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: transparent;
+
+  padding: 0.5rem;
+
+
+  span {
+    background-color: transparent;
+    color: rgba(255, 255, 255, 0.5);
+    color: rgba(50, 50, 50, 0.5);
+    font-size: 1.5rem;
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 500,
+      'GRAD' 0,
+      'opsz' 24;
+    /*---------------*/
+    /* 讓 icon 成為區塊元素，方便 transform */
+    display: block;
+    /* 將 icon 放大 1.5 倍 */
+    /* transform: scale(1.3); */
+    /* 為了讓圖標和文字對齊，你可能需要微調 */
+    vertical-align: middle;
+  }
+
+}
+
+.ItemOperateBtn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+
+  span {
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.ItemOperateBtn:active {
+  background-color: rgba(100, 100, 100, 0.3);
+
+  span {
+    color: rgba(255, 255, 255, 0.5);
+    font-variation-settings:
+      'FILL' 1,
+      'wght' 500,
+      'GRAD' 0,
+      'opsz' 24;
+  }
+}
+
+
+.addNewItemBtn:hover {
+  background-color: rgba(255, 150, 0, 0.3);
+}
+
+.addNewItemBtn:active {
+  background-color: rgba(150, 150, 0, 0.3);
+}
+
+
+.deleteItemBtn:hover {
+  background-color: rgba(255, 0, 0, 0.3);
+}
+
+.deleteItemBtn:active {
+  background-color: rgba(150, 0, 0, 0.3);
+}
+
+.clearAllItemsBtn:hover {
+  background-color: rgba(255, 0, 0, 0.3);
+  span {
+    color: rgb(0, 0, 0);
+  }
+}
+.clearAllItemsBtn:active {
+  background-color: rgba(0, 0, 0, 0.3);
+  span {
+    color: rgba(255, 0, 0, 0.9);
+  }
+}
+
+.viewResumeDataBtn {
+
+  /* display: none; */
+}

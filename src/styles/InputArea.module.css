@@ -1,16 +1,18 @@
 .itemFieldContainer {
 
-
-
+  /* ---- 固定 Panel高度限制 ---- */
+  height: 100%;
+  min-height: 0;
+  max-height: 100%;
   /* background-color: rgba(73, 243, 88, 0.719); */
 
-  position: absolute;
-  top: 0;
-  left: 0;
+  /* position: absolute; */
+  /* top: 0;
+  left: 0; */
   width: 100vw;
-  height: 100vh;
+  /* height: 100vh; */
 
-  padding: 5rem 5rem 8rem 5rem;
+  padding: 0 5rem;
 
 }
 
@@ -18,66 +20,69 @@
   /* 顯示輸入面板範圍，分割左右欄位，空下中間區域 */
 
 
+  /* ---- 固定 Panel高度限制 ---- */
+  height: 100%;
+  min-height: 0;
+  max-height: 100%;
   /* background-color: rgba(73, 166, 243, 0.719); */
 
+
+  /* ---- 子空間版面配置 ---- */
   display: grid;
   grid-template-columns: 1fr 40rem 1fr;
-
   column-gap: 3rem;
-
   justify-items: stretch;
   align-items: start;
 }
 
 
 .leftPanel {
+
+  /* ---- 左側 Panel 高度固定 ---- */
+  height: 100%;
+  min-height: 0;
+  max-height: 100%;
   /* background-color: rgba(243, 73, 192, 0.719); */
 
   grid-column: 1 / 2;
 
-
-  /* 子空間 */
-
+  /* ---- 子空間版面配置 ---- */
+  height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-
-
+  gap: 1.4rem;
 }
-
 
 
 .rightPanel {
-  /* background-color: rgba(192, 73, 243, 0.719); */
 
   grid-column: 3 / 4;
-}
 
+  /* ---- 右側 Panel 高度固定 ---- */
+  height: 100%;
+  min-height: 0;
+  max-height: 100%;
+  /* background-color: rgba(192, 73, 243, 0.3); */
+
+}
 
 .inputBlock {
-  /* background-color: rgba(73, 243, 101, 0.719); */
+  /* background-color: rgba(243, 73, 73, 0.719); */
   padding: 1rem;
+
+
+  /* ---- 右側 Panel 高度 ---- */
+  /* 限制最高，最高以下自動 */
+  height: auto;
+  min-height: 0;
+  max-height: 100%;
+  /* 設定為 flex 自動縮放 */
+  display: flex;
+  flex-direction: column;
+
+  /* background-color: rgba(212, 243, 73, 0.3); */
+
 }
-
-
-
-
-
-/* .inputBlock {
-  width: 100%;
-  height: fit-content;
-  padding: 0.5rem;
-  padding-left: 1rem;
-  margin-bottom: 2rem;
-} */
-
-
-
-
-
-
-
-
 
 
 .addNewItemBtn {
