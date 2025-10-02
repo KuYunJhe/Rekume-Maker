@@ -1,5 +1,9 @@
 .container {
 
+  /* ---- 讓按鈕 bar 恢復點擊事件 ---- */
+  pointer-events: auto;
+
+
   /* background-color: aqua; */
   padding: 0.7rem;
   width: 40%;
@@ -144,12 +148,15 @@
 
 .clearAllItemsBtn:hover {
   background-color: rgba(255, 0, 0, 0.3);
+
   span {
     color: rgb(0, 0, 0);
   }
 }
+
 .clearAllItemsBtn:active {
   background-color: rgba(0, 0, 0, 0.3);
+
   span {
     color: rgba(255, 0, 0, 0.9);
   }

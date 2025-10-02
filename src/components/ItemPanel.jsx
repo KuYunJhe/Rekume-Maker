@@ -4,6 +4,7 @@ import styles from "../styles/InputArea.module.css";
 import classNames from "classnames";
 import styles_Glass from "../styles/Glass.module.css";
 
+
 export default function ItemPanel({
   item,
   itemIndex,
@@ -19,6 +20,7 @@ export default function ItemPanel({
         schema={schemaLeft}
         onFieldChange={onFieldChange}
       />
+
 
       <RightPanel
         item={item}

@@ -51,6 +51,18 @@
   display: flex;
   flex-direction: column;
   gap: 1.4rem;
+
+
+
+
+  /*  ---- 讓中間空白區事件穿透 ---- */
+  pointer-events: none;
+}
+
+.leftPanel,
+.rightPanel {
+  /* 重新開啟事件，表單仍可操作 */
+  pointer-events: auto;
 }
 
 

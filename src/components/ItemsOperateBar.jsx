@@ -92,7 +92,9 @@ export default function ItemsOperateBar({
                         styles.itemSwitchIndexNumber
                       )}
                     >
-                      {itemIndex + 1} / {InputContent.length}
+                      {InputContent.length === 0
+                        ? "0 / 0"
+                        : `${itemIndex + 1} / ${InputContent.length}`}
                     </div>
                   }
                   {

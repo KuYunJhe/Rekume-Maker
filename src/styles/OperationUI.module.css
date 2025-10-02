@@ -15,6 +15,10 @@
   display: grid;
   grid-template-rows: 5rem 1fr 5rem;
   justify-items: center;
+
+
+  /* ---- 讓中間空白區事件穿透 ---- */
+  pointer-events: none;
 }
 
 
@@ -26,5 +30,8 @@
 
 .OperateBar_container {
   /* background-color: rgba(64, 224, 208, 0.274); */
+  
+  /* ---- 讓按鈕 bar 恢復點擊事件 ---- */
+  pointer-events: auto;
 
 }

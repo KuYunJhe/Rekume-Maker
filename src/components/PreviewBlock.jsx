@@ -162,7 +162,10 @@ export function PreviewProfile({ schema, data }) {
                                   {descriptItem.descriptContent}:{" "}
                                 </span>
                                 <a
-                                  className={styles.descriptTitle}
+                                  className={classNames({
+                                    [styles.descriptTitle]: true,
+                                    [styles.descriptTitle_link]: true,
+                                  })}
                                   href={`tel:${descriptItem.descriptValue}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
@@ -177,7 +180,10 @@ export function PreviewProfile({ schema, data }) {
                                   {descriptItem.descriptContent}:{" "}
                                 </span>
                                 <a
-                                  className={styles.descriptTitle}
+                                  className={classNames({
+                                    [styles.descriptTitle]: true,
+                                    [styles.descriptTitle_link]: true,
+                                  })}
                                   href={`mailto:${descriptItem.descriptValue}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
@@ -192,19 +198,37 @@ export function PreviewProfile({ schema, data }) {
                                 <span className={styles.descriptContent}>
                                   {descriptItem.descriptContent}:{" "}
                                 </span>
+
                                 <a
-                                  className={styles.descriptTitle}
+                                  className={classNames({
+                                    [styles.descriptTitle]: true,
+                                    [styles.descriptTitle_link]: true,
+                                  })}
                                   href={descriptItem.descriptTitle}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                 >
-                                  Link
+                                  {
+                                    // 如果 descriptTitle 沒有值就顯示 "Link"
+                                    descriptItem.descriptTitle &&
+                                    descriptItem.descriptTitle !== ""
+                                      ? descriptItem.descriptTitle
+                                      : "Link"
+                                  }
                                 </a>
                               </>
                             ) : (
-                              <span className={styles.descriptContent}>
-                                {descriptItem.descriptContent}
-                              </span>
+                              <>
+                                <span className={styles.descriptContent}>
+                                  {descriptItem.descriptContent}
+                                </span>
+
+                                {descriptItem.descriptTitle && (
+                                  <span className={styles.descriptTitle}>
+                                    {descriptItem.descriptTitle}
+                                  </span>
+                                )}
+                              </>
                             )
                           }
                         </li>

@@ -107,6 +107,24 @@
   }
 
   .descriptTitle {
+    color: rgb(130, 130, 130);
+
+    display: inline-block;
+
+    /* ---- 上下間距 ---- */
+    line-height: 0.8rem;
+
+
+    /* ---- 左右間距 ---- */
+    padding-left: 0.5rem;
+    text-indent: -0.5rem;
+    /* 第一行縮排 */
+    /* text-align: justify; */
+    /* 兩端對齊 */
+
+  }
+
+  .descriptTitle_link {
     color: rgb(23, 114, 189);
 
 
