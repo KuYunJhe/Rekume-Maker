@@ -28,7 +28,7 @@ export default function PreviewSpace() {
 
   return (
     <>
-      <div className={styles.container}>
+      <div id="preview-print-root" className={styles.container}>
         {
           // 只顯示 Profile
           schemas

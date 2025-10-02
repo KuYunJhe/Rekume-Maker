@@ -13,3 +13,43 @@
 
   pointer-events: fill;
 }
+
+.printBar {
+  margin-bottom: .75rem;
+}
+
+.printBtn {
+  padding: .4rem .9rem;
+  font-size: .85rem;
+  cursor: pointer;
+}
+
+/* 列印專用 */
+@media print {
+  .printBar,
+  .printBtn {
+    display: none !important;
+  }
+
+  body.print-preview-only * {
+    visibility: hidden;
+  }
+  body.print-preview-only .previewSpacePrintTarget,
+  body.print-preview-only .previewSpacePrintTarget * {
+    visibility: visible;
+  }
+
+  body.print-preview-only .previewSpacePrintTarget {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 0.5cm 0.8cm;
+    box-shadow: none !important;
+    background: #fff !important;
+  }
+
+  @page {
+    size: A4;
+    margin: 0.8cm;
+  }
+}

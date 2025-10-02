@@ -1,0 +1,54 @@
+@media print {
+  /* 保留顏色 */
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* 調整列印字級基準（影響 rem） */
+  html {
+    font-size: 19px !important; /* 依需求調 */
+  }
+
+  /* 隱藏全部 */
+  body * {
+    visibility: hidden !important;
+  }
+
+  /* 顯示預覽 */
+  #preview-print-root,
+  #preview-print-root * {
+    visibility: visible !important;
+  }
+
+  #preview-print-root {
+    position: absolute !important;
+    inset: 0;
+    margin: 0 !important;
+    /* padding: 12mm 16mm;      */
+    box-shadow: none !important;
+    background: #fff !important;
+    max-width: none !important;
+    width: 100% !important;
+    /* line-height: 1.35; */
+  }
+
+  .printBar { display: none !important; }
+
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  html, body {
+    width: 210mm;
+    height: 297mm;
+  }
+
+  .item,
+  .descriptItem,
+  h3,
+  h4 {
+    page-break-inside: avoid;
+  }
+}

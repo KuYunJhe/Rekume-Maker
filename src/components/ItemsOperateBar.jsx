@@ -137,6 +137,20 @@ export default function ItemsOperateBar({
           } */}
 
           {
+            <button
+              type="button"
+              onClick={() => {
+                requestAnimationFrame(() => {
+                  window.print();
+                });
+              }}
+              className={styles.ItemOperateBtn}
+            >
+              <span className="material-symbols-outlined">print</span>
+            </button>
+          }
+
+          {
             // 清除所有項目、履歷資料按鈕
             <button
               type="button"
