@@ -11,7 +11,7 @@
 
   margin-bottom: 1rem;
 
-  /* outline: rgb(0, 0, 255) solid 2px; */
+  /* outline: rgb(0, 0, 255) solid 1px; */
 
 
   white-space: pre-wrap;
@@ -40,7 +40,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.2rem;
 }
 
 .itemFirstLineLeft {
@@ -165,9 +165,13 @@
 }
 
 .skillContent {
+
   /* display: flex; */
   /* flex-direction: column; */
   /* gap: 0.3rem; */
+  .item {
+    margin-bottom: 0.2rem;
+  }
 
   .skillItem {
     display: flex;

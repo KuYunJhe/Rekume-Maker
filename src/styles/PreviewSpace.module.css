@@ -8,32 +8,22 @@
   margin: 5rem auto 6rem;
 
 
-  padding: 2rem;
+  padding: 2rem 2rem;
+
 
 
   pointer-events: fill;
 }
 
-.printBar {
-  margin-bottom: .75rem;
-}
 
-.printBtn {
-  padding: .4rem .9rem;
-  font-size: .85rem;
-  cursor: pointer;
-}
 
 /* 列印專用 */
 @media print {
-  .printBar,
-  .printBtn {
-    display: none !important;
-  }
 
   body.print-preview-only * {
     visibility: hidden;
   }
+
   body.print-preview-only .previewSpacePrintTarget,
   body.print-preview-only .previewSpacePrintTarget * {
     visibility: visible;
