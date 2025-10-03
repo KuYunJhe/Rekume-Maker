@@ -110,7 +110,7 @@ export function PreviewBlock({ schema, data }) {
 export function PreviewProfile({ schema, data }) {
   //
   // 定義需要加超連結的 descriptContent 類型
-  const linkTypes = useMemo(() => new Set(["link", "website", "github"]), []);
+  const linkTypes = useMemo(() => new Set(["link", "website", "github","linkedin"]), []);
 
   return (
     <>
@@ -159,7 +159,7 @@ export function PreviewProfile({ schema, data }) {
                             "phone" ? (
                               <>
                                 <span className={styles.descriptContent}>
-                                  {descriptItem.descriptContent}:{" "}
+                                  {descriptItem.descriptContent}: {" "}
                                 </span>
                                 <a
                                   className={classNames({
@@ -177,7 +177,7 @@ export function PreviewProfile({ schema, data }) {
                               "email" ? (
                               <>
                                 <span className={styles.descriptContent}>
-                                  {descriptItem.descriptContent}:{" "}
+                                  {descriptItem.descriptContent}: {" "}
                                 </span>
                                 <a
                                   className={classNames({
@@ -195,9 +195,9 @@ export function PreviewProfile({ schema, data }) {
                                 descriptItem.descriptContent.toLowerCase()
                               ) ? (
                               <>
-                                <span className={styles.descriptContent}>
+                                {/* <span className={styles.descriptContent}>
                                   {descriptItem.descriptContent}:{" "}
-                                </span>
+                                </span> */}
 
                                 <a
                                   className={classNames({
@@ -208,13 +208,14 @@ export function PreviewProfile({ schema, data }) {
                                   target="_blank"
                                   rel="noopener noreferrer"
                                 >
-                                  {
+                                  {/* {
                                     // 如果 descriptTitle 沒有值就顯示 "Link"
                                     descriptItem.descriptTitle &&
                                     descriptItem.descriptTitle !== ""
                                       ? descriptItem.descriptTitle
                                       : "Link"
-                                  }
+                                  } */}
+                                  {descriptItem.descriptContent}
                                 </a>
                               </>
                             ) : (
